@@ -21,13 +21,7 @@ public class StudentController {
 
     @GetMapping("")
     public ResponseEntity<List<StudentDTO>> getAllStudents() {
-        List<StudentDTO> studentDTOs = studentService.getAllStudents();
-
-        if (studentDTOs.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.ok(studentDTOs);
-        }
+        return ResponseEntity.ok(studentService.getAllStudents());
     }
 
     @GetMapping("/{id}")
