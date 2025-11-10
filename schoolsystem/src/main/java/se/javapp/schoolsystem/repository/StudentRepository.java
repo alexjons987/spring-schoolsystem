@@ -1,6 +1,7 @@
 package se.javapp.schoolsystem.repository;
 
 import org.springframework.stereotype.Repository;
+import se.javapp.schoolsystem.exception.ResourceNotFoundException;
 import se.javapp.schoolsystem.model.Student;
 
 import java.util.ArrayList;
@@ -18,7 +19,20 @@ public class StudentRepository {
     }
 
     public List<Student> getAll() {
+        if (students.isEmpty()) {
+            throw new ResourceNotFoundException("No students were found in the repository");
+        }
+
         return students;
+    }
+
+    public Student getById(int id) {
+        return students.stream()
+                .filter(s -> s.getId() == id)
+                .findFirst()
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        String.format("Unable to find student with ID %d", id)
+                ));
     }
 
     public Student save(Student student) {

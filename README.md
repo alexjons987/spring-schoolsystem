@@ -82,7 +82,7 @@ The business logic should include controls that:
 * Ensure that a student cannot be registered twice for the same course
 * Stop registration when the course is full
 * Validate that the course and student exist before registration
-* Make it possible to list which students are taking a ## Particular course
+* Make it possible to list which students are taking a particular course
 Testing
 Test your API with Postman or curl.
 Example of flows to test:

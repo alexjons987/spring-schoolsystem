@@ -2,14 +2,16 @@ package se.javapp.schoolsystem.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import se.javapp.schoolsystem.model.dto.StudentDTO;
 import se.javapp.schoolsystem.service.StudentService;
 
 import java.util.List;
 
+@Validated
 @RestController
-@RequestMapping("/students")
+@RequestMapping("/api/students")
 public class StudentController {
     private final StudentService studentService;
 
@@ -28,10 +30,13 @@ public class StudentController {
         }
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<StudentDTO> getStudentById(@PathVariable int id) {
+        return ResponseEntity.ok(studentService.getStudentById(id));
+    }
+
     @PostMapping("/create")
     public ResponseEntity<StudentDTO> createStudent(@Valid @RequestBody StudentDTO studentDTO) {
-        return studentService.createStudent(studentDTO)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.badRequest().build());
+        return ResponseEntity.ok(studentService.createStudent(studentDTO));
     }
 }
