@@ -1,9 +1,8 @@
 package se.javapp.schoolsystem.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import se.javapp.schoolsystem.model.dto.StudentDTO;
 import se.javapp.schoolsystem.service.StudentService;
 
@@ -27,5 +26,12 @@ public class StudentController {
         } else {
             return ResponseEntity.ok(studentDTOs);
         }
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<StudentDTO> createStudent(@Valid @RequestBody StudentDTO studentDTO) {
+        return studentService.createStudent(studentDTO)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.badRequest().build());
     }
 }

@@ -28,8 +28,7 @@ public class StudentService {
     }
 
     public Optional<StudentDTO> createStudent(StudentDTO studentDTO) {
-        Student student = this.toEntity(studentDTO);
-        studentRepository.save(student);
+        Student student = studentRepository.save(this.toEntity(studentDTO));
 
         return Optional.of(this.toDTO(student));
     }
