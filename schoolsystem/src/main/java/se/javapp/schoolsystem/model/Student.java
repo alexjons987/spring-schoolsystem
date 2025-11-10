@@ -6,6 +6,13 @@ public class Student {
     private int age;
     private String email;
 
+    public Student(String name, int age, String email) {
+        this.id = -1;
+        this.name = name;
+        this.age = age;
+        this.email = email;
+    }
+
     public Student(int id, String name, int age, String email) {
         this.id = id;
         this.name = name;
