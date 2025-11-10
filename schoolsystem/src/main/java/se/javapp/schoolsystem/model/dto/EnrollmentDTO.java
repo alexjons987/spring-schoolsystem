@@ -1,18 +1,18 @@
-package se.javapp.schoolsystem.model;
+package se.javapp.schoolsystem.model.dto;
 
 import java.time.LocalDate;
 
-public class Enrollment {
+public class EnrollmentDTO {
     private int enrollmentId;
     private int studentId;
     private int courseId;
     LocalDate date;
 
-    public Enrollment(int studentId, int courseId) {
-        this.enrollmentId = -1;
+    public EnrollmentDTO(int enrollmentId, int studentId, int courseId, LocalDate date) {
+        this.enrollmentId = enrollmentId;
         this.studentId = studentId;
         this.courseId = courseId;
-        this.date = LocalDate.now();
+        this.date = date;
     }
 
     public int getEnrollmentId() {
