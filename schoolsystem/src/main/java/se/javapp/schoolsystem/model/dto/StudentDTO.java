@@ -10,12 +10,12 @@ public class StudentDTO {
     @Size(min = 2, message = "name must contain at least two or more characters")
     private final String name;
     @Positive(message = "age cannot be zero or negative")
-    private final int age;
+    private final Integer age;
     @NotBlank(message = "email cannot be empty")
     @Email(message = "email has to be formatted properly")
     private final String email;
 
-    public StudentDTO(String name, int age, String email) {
+    public StudentDTO(String name, Integer age, String email) {
         this.name = name;
         this.age = age;
         this.email = email;
@@ -25,7 +25,7 @@ public class StudentDTO {
         return name;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 

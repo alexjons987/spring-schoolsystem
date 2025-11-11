@@ -1,7 +1,6 @@
 package se.javapp.schoolsystem.service;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.ResourceAccessException;
 import se.javapp.schoolsystem.model.Student;
 import se.javapp.schoolsystem.model.dto.StudentDTO;
 import se.javapp.schoolsystem.repository.StudentRepository;
@@ -35,6 +34,27 @@ public class StudentService {
     public StudentDTO createStudent(StudentDTO studentDTO) {
         Student student = studentRepository.save(this.toEntity(studentDTO));
 
+        return this.toDTO(student);
+    }
+
+    public boolean deleteStudentById(int id) {
+        return studentRepository.deleteById(id);
+    }
+
+    public StudentDTO updateStudentById(int id, StudentDTO newDetailsDTO) {
+        Student student = studentRepository.getById(id);
+
+        if (newDetailsDTO.getName() != null) {
+            student.setName(newDetailsDTO.getName());
+        }
+        if (newDetailsDTO.getAge() != null) {
+            student.setAge(newDetailsDTO.getAge());
+        }
+        if (newDetailsDTO.getEmail() != null) {
+            student.setEmail(newDetailsDTO.getEmail());
+        }
+
+        studentRepository.save(student);
         return this.toDTO(student);
     }
 
