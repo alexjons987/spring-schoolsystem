@@ -1,28 +1,23 @@
-package se.javapp.schoolsystem.model;
+package se.javapp.schoolsystem.model.dto;
 
+import se.javapp.schoolsystem.model.Student;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class Course {
+public class CourseResponseDTO {
     private int id;
     private String title;
     private String teacher;
     private int maxStudents;
-    List<Student> students;
-    List<Integer> studentIds;
+    private List<Student> students;
 
-    public Course(int id, String title, String teacher, int maxStudents) {
+    public CourseResponseDTO(int id, String title, String teacher, int maxStudents, List<Student> students) {
         this.id = id;
         this.title = title;
         this.teacher = teacher;
         this.maxStudents = maxStudents;
-    }
-
-    public Course(int id, String title, String teacher, int maxStudents, List<Student> students) {
-        this.id = id;
-        this.title = title;
-        this.teacher = teacher;
-        this.maxStudents = maxStudents;
-        this.studentIds = studentIds;
+        this.students = students;
     }
 
     public int getId() {
@@ -60,11 +55,4 @@ public class Course {
     public List<Student> getStudents() {
         return students;
     }
-
-    public void addStudent(Student student) {
-        this.students.add(student);
-    }
-
-    // TODO: removeStudent
-    // public void removeStudent()
 }
