@@ -1,13 +1,15 @@
 package se.javapp.schoolsystem.model.dto;
 
-import se.javapp.schoolsystem.model.Student;
-
-import java.util.List;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 
 public class CourseRequestDTO {
+    @NotBlank(message = "Title can not be empty")
     private String title;
+    @NotBlank(message = "Teacher can not be empty")
     private String teacher;
-    private int maxStudents;
+    @Positive(message = "Max number must be positive")
+    private Integer maxStudents;
 
     public CourseRequestDTO() {}
 
