@@ -38,6 +38,10 @@ public class StudentService {
         return this.toDTO(student);
     }
 
+    public boolean deleteStudentById(int id) {
+        return studentRepository.deleteById(id);
+    }
+
     private StudentDTO toDTO(Student student) {
         if (student == null) return null;
 

@@ -44,4 +44,8 @@ public class StudentRepository {
         students.add(student);
         return student;
     }
+
+    public boolean deleteById(int id) {
+        return students.removeIf(s -> s.getId() == id);
+    }
 }
