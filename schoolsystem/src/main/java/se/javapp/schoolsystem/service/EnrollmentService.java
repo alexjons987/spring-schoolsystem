@@ -1,9 +1,12 @@
 package se.javapp.schoolsystem.service;
 
 import org.springframework.stereotype.Service;
+import se.javapp.schoolsystem.exception.StudentAlreadyEnrolledException;
 import se.javapp.schoolsystem.model.Enrollment;
+import se.javapp.schoolsystem.model.Student;
 import se.javapp.schoolsystem.model.dto.EnrollmentDTO;
 import se.javapp.schoolsystem.repository.EnrollmentRepository;
+import se.javapp.schoolsystem.repository.StudentRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,9 +15,11 @@ import java.util.Optional;
 public class EnrollmentService {
 
     private final EnrollmentRepository enrollmentRepository;
+    private final StudentRepository studentRepository;
 
-    public EnrollmentService(EnrollmentRepository enrollmentRepository) {
+    public EnrollmentService(EnrollmentRepository enrollmentRepository, StudentRepository studentRepository) {
         this.enrollmentRepository = enrollmentRepository;
+        this.studentRepository = studentRepository;
     }
 
     public List<EnrollmentDTO> getAllEnrollments() {
@@ -22,16 +27,14 @@ public class EnrollmentService {
     }
 
     public Optional<EnrollmentDTO> createEnrollment(int studentId, int courseId) {
-        // TODO: Get student, error if not exists
+        Student student = studentRepository.getById(studentId);
 
         // TODO: Get course, error if not exists
 
         // TODO: Check max number of students on the course
 
-        // Check if student is already enrolled on the course
         if (enrollmentRepository.getEnrollment(studentId, courseId).isPresent()) {
-            // TODO: Throw Exception instead ???
-            return Optional.empty();
+            throw new StudentAlreadyEnrolledException("Student is already enrolled is course");
         }
 
         return Optional.of(toDTO(enrollmentRepository.save(new Enrollment(studentId, courseId))));

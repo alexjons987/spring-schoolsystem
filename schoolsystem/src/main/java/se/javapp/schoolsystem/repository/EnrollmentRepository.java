@@ -1,6 +1,7 @@
 package se.javapp.schoolsystem.repository;
 
 import org.springframework.stereotype.Repository;
+import se.javapp.schoolsystem.exception.ResourceNotFoundException;
 import se.javapp.schoolsystem.model.Enrollment;
 
 import java.util.ArrayList;
@@ -12,6 +13,10 @@ public class EnrollmentRepository {
     List<Enrollment> enrollments = new ArrayList<>();
 
     public List<Enrollment> getAllEnrollments() {
+        if (enrollments.isEmpty()) {
+            throw new ResourceNotFoundException("No enrollments were found in the repository");
+        }
+
         return enrollments;
     }
 
