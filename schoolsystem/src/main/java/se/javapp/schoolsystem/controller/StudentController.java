@@ -39,4 +39,9 @@ public class StudentController {
         boolean removedStudent = studentService.deleteStudentById(id);
         return removedStudent ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
+
+    @PostMapping("/update/{id}")
+    public ResponseEntity<StudentDTO> updateStudent(@PathVariable int id, @RequestBody StudentDTO newDetailsDTO) {
+        return ResponseEntity.ok(studentService.updateStudentById(id, newDetailsDTO));
+    }
 }
