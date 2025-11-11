@@ -1,7 +1,6 @@
 package se.javapp.schoolsystem.service;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.ResourceAccessException;
 import se.javapp.schoolsystem.model.Student;
 import se.javapp.schoolsystem.model.dto.StudentDTO;
 import se.javapp.schoolsystem.repository.StudentRepository;
