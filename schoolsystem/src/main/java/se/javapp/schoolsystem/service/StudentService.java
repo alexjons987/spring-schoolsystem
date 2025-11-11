@@ -42,25 +42,20 @@ public class StudentService {
     }
 
     public StudentDTO updateStudentById(int id, StudentDTO newDetailsDTO) {
-        Optional<Student> existing = Optional.of(studentRepository.getById(id));
+        Student student = studentRepository.getById(id);
 
-        if (existing.isPresent()) {
-            Student student = existing.get();
-
-            if (newDetailsDTO.getName() != null) {
-                student.setName(newDetailsDTO.getName());
-            }
-            if (newDetailsDTO.getAge() != null) {
-                student.setAge(newDetailsDTO.getAge());
-            }
-            if (newDetailsDTO.getEmail() != null) {
-                student.setEmail(newDetailsDTO.getEmail());
-            }
-
-            studentRepository.save(student);
-            return this.toDTO(student);
+        if (newDetailsDTO.getName() != null) {
+            student.setName(newDetailsDTO.getName());
         }
-        return null;
+        if (newDetailsDTO.getAge() != null) {
+            student.setAge(newDetailsDTO.getAge());
+        }
+        if (newDetailsDTO.getEmail() != null) {
+            student.setEmail(newDetailsDTO.getEmail());
+        }
+
+        studentRepository.save(student);
+        return this.toDTO(student);
     }
 
     private StudentDTO toDTO(Student student) {
