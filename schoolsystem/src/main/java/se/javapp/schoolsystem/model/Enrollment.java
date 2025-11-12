@@ -1,15 +1,30 @@
 package se.javapp.schoolsystem.model;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "enrollments")
 public class Enrollment {
-    private int enrollmentId;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer enrollmentId;
+
+    @Column(nullable = false)
     private int studentId;
+
+    @Column(nullable = false)
     private int courseId;
+
+    @Column(nullable = false)
     LocalDate date;
 
+    public Enrollment() {
+    }
+
     public Enrollment(int studentId, int courseId) {
-        this.enrollmentId = -1;
         this.studentId = studentId;
         this.courseId = courseId;
         this.date = LocalDate.now();

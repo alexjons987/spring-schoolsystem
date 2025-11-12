@@ -43,7 +43,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Map<String, Object>> handleGeneric(MethodArgumentNotValidException ex) {
+    public ResponseEntity<Map<String, Object>> handleGeneric(Exception ex) {
         HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         Map<String, Object> body = new HashMap<>();
 

@@ -1,12 +1,11 @@
 package se.javapp.schoolsystem.service;
 
 import org.springframework.stereotype.Service;
+import se.javapp.schoolsystem.exception.ResourceNotFoundException;
 import se.javapp.schoolsystem.exception.StudentAlreadyEnrolledException;
 import se.javapp.schoolsystem.model.Enrollment;
-import se.javapp.schoolsystem.model.Student;
 import se.javapp.schoolsystem.model.dto.EnrollmentDTO;
 import se.javapp.schoolsystem.repository.EnrollmentRepository;
-import se.javapp.schoolsystem.repository.StudentRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,26 +14,31 @@ import java.util.Optional;
 public class EnrollmentService {
 
     private final EnrollmentRepository enrollmentRepository;
-    private final StudentRepository studentRepository;
 
-    public EnrollmentService(EnrollmentRepository enrollmentRepository, StudentRepository studentRepository) {
+    public EnrollmentService(EnrollmentRepository enrollmentRepository) {
         this.enrollmentRepository = enrollmentRepository;
-        this.studentRepository = studentRepository;
     }
 
-    public List<EnrollmentDTO> getAllEnrollments() {
-        return enrollmentRepository.getAllEnrollments().stream().map(this::toDTO).toList();
+    public List<EnrollmentDTO> getAll() {
+        List<Enrollment> enrollments = enrollmentRepository.findAll();
+
+        if (enrollments.isEmpty())
+            throw new ResourceNotFoundException("No enrollments were found in the repository");
+
+        return enrollments.stream()
+                .map(this::toDTO)
+                .toList();
     }
 
     public Optional<EnrollmentDTO> createEnrollment(int studentId, int courseId) {
-        Student student = studentRepository.getById(studentId);
+        // TODO: Get student, error if not exists
 
         // TODO: Get course, error if not exists
 
         // TODO: Check max number of students on the course
 
-        if (enrollmentRepository.getEnrollment(studentId, courseId).isPresent()) {
-            throw new StudentAlreadyEnrolledException("Student is already enrolled is course");
+        if (enrollmentRepository.findByStudentIdAndCourseId(studentId, courseId).isPresent()) {
+            throw new StudentAlreadyEnrolledException("Student is already enrolled in course");
         }
 
         return Optional.of(toDTO(enrollmentRepository.save(new Enrollment(studentId, courseId))));

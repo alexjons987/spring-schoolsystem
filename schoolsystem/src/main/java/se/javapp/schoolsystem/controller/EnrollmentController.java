@@ -18,8 +18,8 @@ public class EnrollmentController {
     }
 
     @GetMapping
-    public ResponseEntity<List<EnrollmentDTO>> getAllEnrollments() {
-        return ResponseEntity.ok(enrollmentService.getAllEnrollments());
+    public ResponseEntity<List<EnrollmentDTO>> getAll() {
+        return ResponseEntity.ok(enrollmentService.getAll());
     }
 
     @PostMapping("/create")
