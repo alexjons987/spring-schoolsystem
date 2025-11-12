@@ -43,11 +43,23 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Map<String, Object>> handleGeneric(MethodArgumentNotValidException ex) {
+    public ResponseEntity<Map<String, Object>> handleGeneric(Exception ex) {
         HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         Map<String, Object> body = new HashMap<>();
 
         body.put("error", "Unexpected error: " + ex.getMessage());
+        body.put("status", httpStatus.value());
+        body.put("timestamp", LocalDateTime.now());
+
+        return ResponseEntity.status(httpStatus).body(body);
+    }
+
+    @ExceptionHandler(StudentAlreadyEnrolledException.class)
+    public ResponseEntity<Map<String, Object>> handleAlreadyEnrolled(StudentAlreadyEnrolledException ex) {
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+        Map<String, Object> body = new HashMap<>();
+
+        body.put("error", ex.getMessage());
         body.put("status", httpStatus.value());
         body.put("timestamp", LocalDateTime.now());
 

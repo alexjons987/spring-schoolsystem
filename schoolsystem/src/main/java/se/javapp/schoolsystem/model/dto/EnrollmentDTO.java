@@ -1,33 +1,18 @@
-package se.javapp.schoolsystem.model;
-
-import jakarta.persistence.*;
+package se.javapp.schoolsystem.model.dto;
 
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "enrollments")
-public class Enrollment {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer enrollmentId;
-
-    @Column(nullable = false)
+public class EnrollmentDTO {
+    private int enrollmentId;
     private int studentId;
-
-    @Column(nullable = false)
     private int courseId;
-
-    @Column(nullable = false)
     LocalDate date;
 
-    public Enrollment() {
-    }
-
-    public Enrollment(int studentId, int courseId) {
+    public EnrollmentDTO(int enrollmentId, int studentId, int courseId, LocalDate date) {
+        this.enrollmentId = enrollmentId;
         this.studentId = studentId;
         this.courseId = courseId;
-        this.date = LocalDate.now();
+        this.date = date;
     }
 
     public int getEnrollmentId() {
