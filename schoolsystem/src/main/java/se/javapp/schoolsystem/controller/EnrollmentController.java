@@ -18,8 +18,13 @@ public class EnrollmentController {
     }
 
     @GetMapping
-    public ResponseEntity<List<EnrollmentDTO>> getAll() {
-        return ResponseEntity.ok(enrollmentService.getAll());
+    public ResponseEntity<List<EnrollmentDTO>> getAllEnrollments() {
+        return ResponseEntity.ok(enrollmentService.getAllEnrollments());
+    }
+
+    @GetMapping("/{enrollmentId}")
+    public ResponseEntity<EnrollmentDTO> getEnrollmentById(@PathVariable int enrollmentId) {
+        return ResponseEntity.ok(enrollmentService.getEnrollmentById(enrollmentId));
     }
 
     @PostMapping("/create")

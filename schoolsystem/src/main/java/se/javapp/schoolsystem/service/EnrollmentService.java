@@ -19,7 +19,7 @@ public class EnrollmentService {
         this.enrollmentRepository = enrollmentRepository;
     }
 
-    public List<EnrollmentDTO> getAll() {
+    public List<EnrollmentDTO> getAllEnrollments() {
         List<Enrollment> enrollments = enrollmentRepository.findAll();
 
         if (enrollments.isEmpty())
@@ -28,6 +28,15 @@ public class EnrollmentService {
         return enrollments.stream()
                 .map(this::toDTO)
                 .toList();
+    }
+
+    public EnrollmentDTO getEnrollmentById(int enrollmentId) {
+        Optional<Enrollment> enrollment = enrollmentRepository.findById(enrollmentId);
+
+        if (enrollment.isEmpty())
+            throw new ResourceNotFoundException("No enrollment with id " + enrollmentId +" was found in the repository");
+
+        return toDTO(enrollment.get());
     }
 
     public Optional<EnrollmentDTO> createEnrollment(int studentId, int courseId) {
