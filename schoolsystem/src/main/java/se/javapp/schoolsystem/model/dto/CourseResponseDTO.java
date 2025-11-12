@@ -10,14 +10,15 @@ public class CourseResponseDTO {
     private String title;
     private String teacher;
     private int maxStudents;
-    private List<Student> students;
+    //private List<Integer> studentIds;
 
-    public CourseResponseDTO(int id, String title, String teacher, int maxStudents, List<Student> students) {
+    public CourseResponseDTO(int id, String title, String teacher, int maxStudents) {
         this.id = id;
         this.title = title;
         this.teacher = teacher;
         this.maxStudents = maxStudents;
-        this.students = students;
+        // TODO: enrollments?
+        //this.studentIds = studentIds;
     }
 
     public int getId() {
@@ -52,7 +53,8 @@ public class CourseResponseDTO {
         this.maxStudents = maxStudents;
     }
 
-    public List<Student> getStudents() {
-        return students;
-    }
+    // TODO: getter/setter for enrollments?
+//    public List<Integer> getStudentIds() {
+//        return studentIds;
+//    }
 }

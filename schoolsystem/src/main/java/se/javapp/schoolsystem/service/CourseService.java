@@ -7,6 +7,7 @@ import se.javapp.schoolsystem.model.dto.CourseResponseDTO;
 import se.javapp.schoolsystem.repository.CourseRepository;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Service
 public class CourseService {
@@ -16,9 +17,9 @@ public class CourseService {
         this.repository = repository;
     }
 
-    public CourseResponseDTO addCourse(CourseRequestDTO dto) {
+    public Optional<CourseResponseDTO> addCourse(CourseRequestDTO dto) {
         Course course = toEntity(dto);
-        return toResponseDto(repository.save(course));
+        return Optional.of(toResponseDto(repository.save(course)));
     }
 
     public CourseResponseDTO toResponseDto(Course course) {
@@ -26,17 +27,15 @@ public class CourseService {
                 course.getId(),
                 course.getTitle(),
                 course.getTeacher(),
-                course.getMaxStudents(),
-                course.getStudents()
+                course.getMaxStudents()
         );
     }
 
     public Course toEntity(CourseRequestDTO dto) {
         return new Course(
-                -1,
                 dto.getTitle(),
                 dto.getTeacher(),
-                dto.getMaxStudents(),
-                new ArrayList<>());
+                dto.getMaxStudents()
+        );
     }
 }
