@@ -1,6 +1,7 @@
 package se.javapp.schoolsystem.service;
 
 import org.springframework.stereotype.Service;
+import se.javapp.schoolsystem.exception.ResourceNotFoundException;
 import se.javapp.schoolsystem.model.Student;
 import se.javapp.schoolsystem.model.dto.StudentDTO;
 import se.javapp.schoolsystem.repository.StudentRepository;
@@ -18,44 +19,58 @@ public class StudentService {
     }
 
     public List<StudentDTO> getAllStudents() {
-        List<StudentDTO> studentDTOs = new ArrayList<>();
+        List<Student> allStudents = studentRepository.findAll();
 
-        for (Student student : studentRepository.getAll()) {
-            studentDTOs.add(this.toDTO(student));
+        if (!allStudents.isEmpty()) {
+            return allStudents.stream()
+                    .map(this::toDTO)
+                    .toList();
+        } else {
+            throw new ResourceNotFoundException("No students were found in the repository");
         }
-
-        return studentDTOs;
     }
 
     public StudentDTO getStudentById(int id) {
-        return this.toDTO(studentRepository.getById(id));
+        return studentRepository.findById(id)
+                .map(this::toDTO)
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("No student with ID %d was found", id)));
     }
 
     public StudentDTO createStudent(StudentDTO studentDTO) {
-        Student student = studentRepository.save(this.toEntity(studentDTO));
+        Student student = studentRepository.save(
+                new Student(studentDTO.getName(), studentDTO.getAge(), studentDTO.getEmail())
+        );
 
         return this.toDTO(student);
     }
 
     public boolean deleteStudentById(int id) {
-        return studentRepository.deleteById(id);
+        if (studentRepository.existsById(id)) {
+            studentRepository.deleteById(id);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public StudentDTO updateStudentById(int id, StudentDTO newDetailsDTO) {
-        Student student = studentRepository.getById(id);
+        Optional<Student> student = studentRepository.findById(id);
 
-        if (newDetailsDTO.getName() != null) {
-            student.setName(newDetailsDTO.getName());
-        }
-        if (newDetailsDTO.getAge() != null) {
-            student.setAge(newDetailsDTO.getAge());
-        }
-        if (newDetailsDTO.getEmail() != null) {
-            student.setEmail(newDetailsDTO.getEmail());
-        }
+        if (student.isPresent()) {
+            if (newDetailsDTO.getName() != null) {
+                student.get().setName(newDetailsDTO.getName());
+            }
+            if (newDetailsDTO.getAge() != null) {
+                student.get().setAge(newDetailsDTO.getAge());
+            }
+            if (newDetailsDTO.getEmail() != null) {
+                student.get().setEmail(newDetailsDTO.getEmail());
+            }
 
-        studentRepository.save(student);
-        return this.toDTO(student);
+            studentRepository.save(student.get());
+            return this.toDTO(student.get());
+        }
+        return null;
     }
 
     private StudentDTO toDTO(Student student) {

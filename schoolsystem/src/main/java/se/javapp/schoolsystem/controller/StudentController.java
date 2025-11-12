@@ -36,8 +36,7 @@ public class StudentController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteStudent(@PathVariable int id) {
-        boolean removedStudent = studentService.deleteStudentById(id);
-        return removedStudent ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
+        return studentService.deleteStudentById(id) ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
 
     @PostMapping("/update/{id}")
