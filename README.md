@@ -125,3 +125,26 @@ The aim is to move from a memory-based system to a system that stores data perma
 * Add the ability to update or delete data via the API.
 * Test with MySQL.
 * Display the data with SQL queries in the database to verify that it was saved correctly.
+
+# Day 3 requirements
+### Relations
+#### New requirements:
+1. Create relationships between the entities:
+* **Student ↔ Enrollment ↔ Course**
+* A student can be registered in multiple courses.
+* A course can have multiple students.
+* `Enrollment` functions as a connection table (Many-to-Many relationship).
+
+#### Technical requirements:
+* All entities (`Student`, `Course`, `Enrollment`) should be correctly annotated with
+
+JPA relationships:
+* `@OneToMany`, `@ManyToOne`, `@ManyToMany` where appropriate.
+* `Enrollment` should have relationships to both `Student` and `Course`.
+* When a student is registered for a course, a new **Enrollment** entry is created in the database.
+
+#### Additional challenges:
+* Add **grades** to `Enrollment` and make it possible to update grades via the API.
+* Add **cascade rules** so that the correct data is deleted or saved automatically when changes occur.
+* Test the relationships by retrieving all courses a student is taking or all students in a course.
+* Show understanding of the difference between **EAGER** and **LAZY** loading.
