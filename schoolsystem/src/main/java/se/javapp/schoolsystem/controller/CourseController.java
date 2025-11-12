@@ -22,7 +22,7 @@ public class CourseController {
         this.service = service;
     }
 
-    @PostMapping("/new-course")
+    @PostMapping("/create")
     public ResponseEntity<CourseResponseDTO> addCourse(@Valid @RequestBody CourseRequestDTO dto) {
        return  service.addCourse(dto)
                .map(ResponseEntity::ok)
