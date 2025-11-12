@@ -6,7 +6,6 @@ import se.javapp.schoolsystem.model.Student;
 import se.javapp.schoolsystem.model.dto.StudentDTO;
 import se.javapp.schoolsystem.repository.StudentRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
