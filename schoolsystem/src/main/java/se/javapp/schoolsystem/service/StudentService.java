@@ -35,23 +35,21 @@ public class StudentService {
                 .orElseThrow(() -> new ResourceNotFoundException(String.format("No student with ID %d was found", id)));
     }
 
-    public List<StudentDTO> getStudentsByNamePartial(String partialName) {
-        return toDTOList(studentRepository.findByNameContains(partialName));
-    }
-    public List<StudentDTO> getStudentsByFirstLetter(String input) {
-        String firstLetter = input.substring(0, 1);
-        return toDTOList(studentRepository.findByNameStartsWith(firstLetter));
-    }
-    public List<StudentDTO> getStudentsBelowAge(int age) {
-        return toDTOList(studentRepository.findByAgeLessThan(age));
-    }
-    public List<StudentDTO> getStudentsAboveAge(int age) {
-        return toDTOList(studentRepository.findByAgeGreaterThan(age));
-    }
-    public List<StudentDTO> getStudentsByAgeBetween(int lower, int upper) {
-        return toDTOList(studentRepository.findByAgeBetween(lower, upper));
-    }
+    public List<StudentDTO> filterStudents(String name, String letter, Integer minAge, Integer maxAge) {
+        List<Student> allStudents = studentRepository.findAll();
 
+        if (!allStudents.isEmpty()) {
+            return allStudents.stream()
+                    .filter(s -> name == null   || s.getName().contains(name))
+                    .filter(s -> letter == null || s.getName().startsWith(letter))
+                    .filter(s -> minAge == null || s.getAge() >= minAge)
+                    .filter(s -> maxAge == null || s.getAge() <= maxAge)
+                    .map(this::toDTO)
+                    .toList();
+        } else {
+            throw new ResourceNotFoundException("No students were found in the repository");
+        }
+    }
     public StudentDTO createStudent(StudentDTO studentDTO) {
         Student student = studentRepository.save(
                 new Student(studentDTO.getName(), studentDTO.getAge(), studentDTO.getEmail())

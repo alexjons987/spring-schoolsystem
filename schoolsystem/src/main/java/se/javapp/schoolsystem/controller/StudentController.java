@@ -7,7 +7,10 @@ import org.springframework.web.bind.annotation.*;
 import se.javapp.schoolsystem.model.dto.StudentDTO;
 import se.javapp.schoolsystem.service.StudentService;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 @Validated
 @RestController
@@ -29,30 +32,16 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getStudentById(id));
     }
 
-    @GetMapping("/name/{input}")
-    public ResponseEntity<List<StudentDTO>> getStudentsByName(@PathVariable String input) {
-        return ResponseEntity.ok(studentService.getStudentsByNamePartial(input));
+    @GetMapping("/search")
+    public ResponseEntity<List<StudentDTO>> searchStudents(
+            @RequestParam(required = false) String namePart,
+            @RequestParam(required = false) String firstLetter,
+            @RequestParam(required = false) Integer ageMin,
+            @RequestParam(required = false) Integer ageMax
+    ){
+        return ResponseEntity.ok(studentService.filterStudents(namePart,firstLetter , ageMin, ageMax));
     }
 
-    @GetMapping("/letter/{input}")
-    public ResponseEntity<List<StudentDTO>> getStudentsLetter(@PathVariable String input) {
-        return ResponseEntity.ok(studentService.getStudentsByFirstLetter(input));
-    }
-
-    @GetMapping("/belowAge/{input}")
-    public ResponseEntity<List<StudentDTO>> getStudentsBelowAge(@PathVariable int input) {
-        return ResponseEntity.ok(studentService.getStudentsBelowAge(input));
-    }
-
-    @GetMapping("/aboveAge/{input}")
-    public ResponseEntity<List<StudentDTO>> getStudentsAboveAge(@PathVariable int input) {
-        return ResponseEntity.ok(studentService.getStudentsAboveAge(input));
-    }
-
-    @GetMapping("/betweenAge/{input}/{inputTwo}")
-    public ResponseEntity<List<StudentDTO>> getStudentsByAgeBetween(@PathVariable int input, @PathVariable int inputTwo) {
-        return ResponseEntity.ok(studentService.getStudentsByAgeBetween(input,inputTwo));
-    }
 
     @PostMapping("/create")
     public ResponseEntity<StudentDTO> createStudent(@Valid @RequestBody StudentDTO studentDTO) {
