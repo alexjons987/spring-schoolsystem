@@ -1,6 +1,10 @@
 package se.javapp.schoolsystem.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "courses")
@@ -13,6 +17,10 @@ public class Course {
     private int maxStudents;
     // TODO: add list of enrollments with @OneToMany?
     // private List<Integer> studentIds;
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<Enrollment> enrollments = new HashSet<>();
 
     public Course() {}
 
@@ -61,6 +69,14 @@ public class Course {
 
     public void setMaxStudents(int maxStudents) {
         this.maxStudents = maxStudents;
+    }
+
+    public Set<Enrollment> getEnrollments() {
+        return enrollments;
+    }
+
+    public void setEnrollments(Set<Enrollment> enrollments) {
+        this.enrollments = enrollments;
     }
 
     // TODO: add getter/setter for enrollments

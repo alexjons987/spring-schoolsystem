@@ -5,13 +5,13 @@ import java.time.LocalDate;
 public class EnrollmentDTO {
     private int enrollmentId;
     private StudentDTO student;
-    private int courseId;
+    private CourseResponseDTO course;
     LocalDate date;
 
-    public EnrollmentDTO(int enrollmentId, StudentDTO student, int courseId, LocalDate date) {
+    public EnrollmentDTO(int enrollmentId, StudentDTO student, CourseResponseDTO course, LocalDate date) {
         this.enrollmentId = enrollmentId;
         this.student = student;
-        this.courseId = courseId;
+        this.course = course;
         this.date = date;
     }
 
@@ -31,12 +31,12 @@ public class EnrollmentDTO {
         this.student = student;
     }
 
-    public int getCourseId() {
-        return courseId;
+    public CourseResponseDTO getCourse() {
+        return course;
     }
 
-    public void setCourseId(int courseId) {
-        this.courseId = courseId;
+    public void setCourse(CourseResponseDTO course) {
+        this.course = course;
     }
 
     public LocalDate getDate() {

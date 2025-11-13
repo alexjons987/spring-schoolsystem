@@ -16,8 +16,9 @@ public class Enrollment {
     @JoinColumn(name = "student_id")
     private Student student;
 
-    @Column(nullable = false)
-    private int courseId;
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    private Course course;
 
     @Column(nullable = false)
     LocalDate date;
@@ -25,9 +26,9 @@ public class Enrollment {
     public Enrollment() {
     }
 
-    public Enrollment(Student student, int courseId) {
+    public Enrollment(Student student, Course course) {
         this.student = student;
-        this.courseId = courseId;
+        this.course = course;
         this.date = LocalDate.now();
     }
 
@@ -47,12 +48,12 @@ public class Enrollment {
         this.student = student;
     }
 
-    public int getCourseId() {
-        return courseId;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setCourseId(int courseId) {
-        this.courseId = courseId;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     public LocalDate getDate() {
