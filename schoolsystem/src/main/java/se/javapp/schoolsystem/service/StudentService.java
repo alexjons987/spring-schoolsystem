@@ -35,6 +35,23 @@ public class StudentService {
                 .orElseThrow(() -> new ResourceNotFoundException(String.format("No student with ID %d was found", id)));
     }
 
+    public List<StudentDTO> getStudentsByNamePartial(String partialName) {
+        return toDTOList(studentRepository.findByNameContains(partialName));
+    }
+    public List<StudentDTO> getStudentsByFirstLetter(String input) {
+        String firstLetter = input.substring(0, 1);
+        return toDTOList(studentRepository.findByNameStartsWith(firstLetter));
+    }
+    public List<StudentDTO> getStudentsBelowAge(int age) {
+        return toDTOList(studentRepository.findByAgeLessThan(age));
+    }
+    public List<StudentDTO> getStudentsAboveAge(int age) {
+        return toDTOList(studentRepository.findByAgeGreaterThan(age));
+    }
+    public List<StudentDTO> getStudentsByAgeBetween(int lower, int upper) {
+        return toDTOList(studentRepository.findByAgeBetween(lower, upper));
+    }
+
     public StudentDTO createStudent(StudentDTO studentDTO) {
         Student student = studentRepository.save(
                 new Student(studentDTO.getName(), studentDTO.getAge(), studentDTO.getEmail())
@@ -76,6 +93,16 @@ public class StudentService {
         if (student == null) return null;
 
         return new StudentDTO(student.getName(), student.getAge(), student.getEmail());
+    }
+
+    private List<StudentDTO> toDTOList(List<Student> students) {
+        if (!students.isEmpty()) {
+            return students.stream()
+                    .map(this::toDTO)
+                    .toList();
+        } else {
+            throw new ResourceNotFoundException("There was no result to your query. PEBCAK probable.");
+        }
     }
 
     private Student toEntity(StudentDTO studentDTO) {
