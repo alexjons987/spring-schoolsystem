@@ -1,27 +1,34 @@
 package se.javapp.schoolsystem.model;
 
-import java.util.List;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "courses")
 public class Course {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String title;
     private String teacher;
     private int maxStudents;
-    List<Student> students;
+    // TODO: add list of enrollments with @OneToMany?
+    // private List<Integer> studentIds;
+
+    public Course() {}
+
+    public Course(String title, String teacher, int maxStudents) {
+        this.title = title;
+        this.teacher = teacher;
+        this.maxStudents = maxStudents;
+        //this.studentIds = studentIds;
+    }
 
     public Course(int id, String title, String teacher, int maxStudents) {
         this.id = id;
         this.title = title;
         this.teacher = teacher;
         this.maxStudents = maxStudents;
-    }
-
-    public Course(int id, String title, String teacher, int maxStudents, List<Student> students) {
-        this.id = id;
-        this.title = title;
-        this.teacher = teacher;
-        this.maxStudents = maxStudents;
-        this.students = students;
+       // this.studentIds = studentIds;
     }
 
     public int getId() {
@@ -56,13 +63,14 @@ public class Course {
         this.maxStudents = maxStudents;
     }
 
-    public List<Student> getStudents() {
-        return students;
-    }
-
-    public void addStudent(Student student) {
-        this.students.add(student);
-    }
+    // TODO: add getter/setter for enrollments
+    // public List<Integer> getStudentIds() {
+    //   return studentIds;
+    // }
+    //
+    // public void addStudent(Integer id) {
+    //   this.studentIds.add(id);
+    // }
 
     // TODO: removeStudent
     // public void removeStudent()
