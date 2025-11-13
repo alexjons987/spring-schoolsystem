@@ -65,4 +65,16 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(httpStatus).body(body);
     }
+
+    @ExceptionHandler(MaxNumberOfStudentsInCourseException.class)
+    public ResponseEntity<Map<String, Object>> handleAlreadyEnrolled(MaxNumberOfStudentsInCourseException ex) {
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+        Map<String, Object> body = new HashMap<>();
+
+        body.put("error", ex.getMessage());
+        body.put("status", httpStatus.value());
+        body.put("timestamp", LocalDateTime.now());
+
+        return ResponseEntity.status(httpStatus).body(body);
+    }
 }

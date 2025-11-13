@@ -1,6 +1,10 @@
 package se.javapp.schoolsystem.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "students")
@@ -17,6 +21,10 @@ public class Student {
 
     @Column(nullable = false)
     private String email;
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<Enrollment> enrollments = new HashSet<>();
 
     public Student() {
     }
@@ -64,6 +72,14 @@ public class Student {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Set<Enrollment> getEnrollments() {
+        return enrollments;
+    }
+
+    public void setEnrollments(Set<Enrollment> enrollments) {
+        this.enrollments = enrollments;
     }
 
     @Override

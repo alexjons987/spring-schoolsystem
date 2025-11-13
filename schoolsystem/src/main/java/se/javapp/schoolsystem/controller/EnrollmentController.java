@@ -3,6 +3,7 @@ package se.javapp.schoolsystem.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import se.javapp.schoolsystem.model.dto.EnrollmentDTO;
+import se.javapp.schoolsystem.model.dto.StudentDTO;
 import se.javapp.schoolsystem.service.EnrollmentService;
 
 import java.util.List;
@@ -32,5 +33,10 @@ public class EnrollmentController {
         return enrollmentService.createEnrollment(studentId, courseId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.badRequest().build());
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteEnrollment(@PathVariable int id) {
+        return enrollmentService.deleteEnrollmentById(id) ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
 }

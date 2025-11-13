@@ -136,15 +136,31 @@ The aim is to move from a memory-based system to a system that stores data perma
 * `Enrollment` functions as a connection table (Many-to-Many relationship).
 
 #### Technical requirements:
-* All entities (`Student`, `Course`, `Enrollment`) should be correctly annotated with
-
-JPA relationships:
-* `@OneToMany`, `@ManyToOne`, `@ManyToMany` where appropriate.
-* `Enrollment` should have relationships to both `Student` and `Course`.
-* When a student is registered for a course, a new **Enrollment** entry is created in the database.
+* All entities (`Student`, `Course`, `Enrollment`) should be correctly annotated with JPA relationships:
+  * `@OneToMany`, `@ManyToOne`, `@ManyToMany` where appropriate.
+  * `Enrollment` should have relationships to both `Student` and `Course`.
+  * When a student is registered for a course, a new **Enrollment** entry is created in the database.
 
 #### Additional challenges:
 * Add **grades** to `Enrollment` and make it possible to update grades via the API.
 * Add **cascade rules** so that the correct data is deleted or saved automatically when changes occur.
 * Test the relationships by retrieving all courses a student is taking or all students in a course.
 * Show understanding of the difference between **EAGER** and **LAZY** loading.
+
+# Day 4 requirements (OPTIONAL)
+You should create at least three of your own JPQL queries in your repository classes.
+Which ones you choose is up to you
+
+### StudentRepository
+Create queries that make it possible to:
+* Retrieve all students whose names contain a certain text (case-insensitive).
+* Retrieve all students older than a certain age value.
+* Count how many students are registered in the system.
+
+* Retrieve all courses taught by a certain teacher (teacher).
+* Retrieve all courses that still have vacancies (fewer participants than maxStudents).
+* Retrieve all courses where at least one student has a grade above 90.
+
+* Retrieve all enrollments with grades above a certain value.
+* Retrieve all enrollments that were created after a certain date.
+* Retrieve the number of students registered in each course (grouping).

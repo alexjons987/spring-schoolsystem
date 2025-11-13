@@ -12,11 +12,13 @@ public class Enrollment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer enrollmentId;
 
-    @Column(nullable = false)
-    private int studentId;
+    @ManyToOne
+    @JoinColumn(name = "student_id")
+    private Student student;
 
-    @Column(nullable = false)
-    private int courseId;
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    private Course course;
 
     @Column(nullable = false)
     LocalDate date;
@@ -24,34 +26,34 @@ public class Enrollment {
     public Enrollment() {
     }
 
-    public Enrollment(int studentId, int courseId) {
-        this.studentId = studentId;
-        this.courseId = courseId;
+    public Enrollment(Student student, Course course) {
+        this.student = student;
+        this.course = course;
         this.date = LocalDate.now();
     }
 
-    public int getEnrollmentId() {
+    public Integer getEnrollmentId() {
         return enrollmentId;
     }
 
-    public void setEnrollmentId(int enrollmentId) {
+    public void setEnrollmentId(Integer enrollmentId) {
         this.enrollmentId = enrollmentId;
     }
 
-    public int getStudentId() {
-        return studentId;
+    public Student getStudent() {
+        return student;
     }
 
-    public void setStudentId(int studentId) {
-        this.studentId = studentId;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
-    public int getCourseId() {
-        return courseId;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setCourseId(int courseId) {
-        this.courseId = courseId;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     public LocalDate getDate() {
