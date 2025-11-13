@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import se.javapp.schoolsystem.model.dto.CourseRequestDTO;
 import se.javapp.schoolsystem.model.dto.CourseResponseDTO;
+import se.javapp.schoolsystem.model.dto.StudentDTO;
 import se.javapp.schoolsystem.service.CourseService;
 
 import java.util.List;
@@ -29,5 +30,15 @@ public class CourseController {
        return  service.addCourse(dto)
                .map(ResponseEntity::ok)
                .orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
+    }
+
+    @GetMapping("/{courseId}")
+    public ResponseEntity<CourseResponseDTO> getStudentById(@PathVariable int courseId) {
+        return ResponseEntity.ok(service.getCourseById(courseId));
+    }
+
+    @GetMapping("/{courseId}/students")
+    public ResponseEntity<List<StudentDTO>> getStudentsByCourseId(@PathVariable int courseId) {
+        return ResponseEntity.ok(service.getStudentsByCourseId(courseId));
     }
 }

@@ -72,12 +72,14 @@ public class StudentService {
         return null;
     }
 
+    // TODO: Remove (now available in StudentMapper)
     private StudentDTO toDTO(Student student) {
         if (student == null) return null;
 
         return new StudentDTO(student.getName(), student.getAge(), student.getEmail());
     }
 
+    // TODO: Remove (now available in StudentMapper)
     private Student toEntity(StudentDTO studentDTO) {
         if (studentDTO == null) return null;
 
