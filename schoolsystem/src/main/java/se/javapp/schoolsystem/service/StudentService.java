@@ -40,7 +40,7 @@ public class StudentService {
 
         if (!allStudents.isEmpty()) {
             return allStudents.stream()
-                    .filter(s -> name == null   || s.getName().contains(name))
+                    .filter(s -> name == null || s.getName().contains(name))
                     .filter(s -> letter == null || s.getName().startsWith(letter))
                     .filter(s -> minAge == null || s.getAge() >= minAge)
                     .filter(s -> maxAge == null || s.getAge() <= maxAge)
@@ -50,6 +50,7 @@ public class StudentService {
             throw new ResourceNotFoundException("No students were found in the repository");
         }
     }
+
     public StudentDTO createStudent(StudentDTO studentDTO) {
         Student student = studentRepository.save(
                 new Student(studentDTO.getName(), studentDTO.getAge(), studentDTO.getEmail())
