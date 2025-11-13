@@ -38,7 +38,6 @@ public class StudentController {
         return ResponseEntity.ok(studentService.filterStudents(namePart,firstLetter , ageMin, ageMax));
     }
 
-
     @PostMapping("/create")
     public ResponseEntity<StudentDTO> createStudent(@Valid @RequestBody StudentDTO studentDTO) {
         return ResponseEntity.ok(studentService.createStudent(studentDTO));
