@@ -2,6 +2,7 @@ package se.javapp.schoolsystem.service;
 
 import org.springframework.stereotype.Service;
 import se.javapp.schoolsystem.exception.ResourceNotFoundException;
+import se.javapp.schoolsystem.mapper.StudentMapper;
 import se.javapp.schoolsystem.model.Student;
 import se.javapp.schoolsystem.model.dto.StudentDTO;
 import se.javapp.schoolsystem.repository.StudentRepository;
@@ -12,9 +13,11 @@ import java.util.Optional;
 @Service
 public class StudentService {
     private final StudentRepository studentRepository;
+    private final StudentMapper studentMapper;
 
-    public StudentService(StudentRepository studentRepository) {
+    public StudentService(StudentRepository studentRepository, StudentMapper studentMapper) {
         this.studentRepository = studentRepository;
+        this.studentMapper = studentMapper;
     }
 
     public List<StudentDTO> getAllStudents() {
@@ -22,7 +25,7 @@ public class StudentService {
 
         if (!allStudents.isEmpty()) {
             return allStudents.stream()
-                    .map(this::toDTO)
+                    .map(studentMapper::toDTO)
                     .toList();
         } else {
             throw new ResourceNotFoundException("No students were found in the repository");
@@ -31,7 +34,7 @@ public class StudentService {
 
     public StudentDTO getStudentById(int id) {
         return studentRepository.findById(id)
-                .map(this::toDTO)
+                .map(studentMapper::toDTO)
                 .orElseThrow(() -> new ResourceNotFoundException(String.format("No student with ID %d was found", id)));
     }
 
@@ -40,7 +43,7 @@ public class StudentService {
                 new Student(studentDTO.getName(), studentDTO.getAge(), studentDTO.getEmail())
         );
 
-        return this.toDTO(student);
+        return studentMapper.toDTO(student);
     }
 
     public boolean deleteStudentById(int id) {
@@ -67,22 +70,8 @@ public class StudentService {
             }
 
             studentRepository.save(student.get());
-            return this.toDTO(student.get());
+            return studentMapper.toDTO(student.get());
         }
         return null;
-    }
-
-    // TODO: Remove (now available in StudentMapper)
-    private StudentDTO toDTO(Student student) {
-        if (student == null) return null;
-
-        return new StudentDTO(student.getName(), student.getAge(), student.getEmail());
-    }
-
-    // TODO: Remove (now available in StudentMapper)
-    private Student toEntity(StudentDTO studentDTO) {
-        if (studentDTO == null) return null;
-
-        return new Student(studentDTO.getName(), studentDTO.getAge(), studentDTO.getEmail());
     }
 }
