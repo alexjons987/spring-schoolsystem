@@ -29,6 +29,16 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getStudentById(id));
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<StudentDTO>> searchStudents(
+            @RequestParam(required = false) String namePart,
+            @RequestParam(required = false) String firstLetter,
+            @RequestParam(required = false) Integer ageMin,
+            @RequestParam(required = false) Integer ageMax
+    ) {
+        return ResponseEntity.ok(studentService.filterStudents(namePart, firstLetter, ageMin, ageMax));
+    }
+
     @PostMapping("/create")
     public ResponseEntity<StudentDTO> createStudent(@Valid @RequestBody StudentDTO studentDTO) {
         return ResponseEntity.ok(studentService.createStudent(studentDTO));
