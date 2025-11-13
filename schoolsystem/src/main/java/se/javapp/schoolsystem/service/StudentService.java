@@ -47,7 +47,7 @@ public class StudentService {
                     .filter(s -> letter == null || s.getName().startsWith(letter))
                     .filter(s -> minAge == null || s.getAge() >= minAge)
                     .filter(s -> maxAge == null || s.getAge() <= maxAge)
-                    .map(this::toDTO)
+                    .map(studentMapper::toDTO)
                     .toList();
         } else {
             throw new ResourceNotFoundException("No students were found in the repository");
