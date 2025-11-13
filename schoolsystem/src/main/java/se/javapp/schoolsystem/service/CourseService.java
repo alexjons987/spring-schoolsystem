@@ -16,18 +16,20 @@ import java.util.Optional;
 
 @Service
 public class CourseService {
-    private final CourseRepository repository;
+    private final CourseRepository courseRepository;
     private final EnrollmentRepository enrollmentRepository;
     private final StudentMapper studentMapper;
 
-    public CourseService(CourseRepository repository, EnrollmentRepository enrollmentRepository, StudentMapper studentMapper) {
-        this.repository = repository;
+    public CourseService(CourseRepository courseRepository,
+                         EnrollmentRepository enrollmentRepository,
+                         StudentMapper studentMapper) {
+        this.courseRepository = courseRepository;
         this.enrollmentRepository = enrollmentRepository;
         this.studentMapper = studentMapper;
     }
 
     public List<CourseResponseDTO> getAllCourses() {
-        List<Course> courses = repository.findAll();
+        List<Course> courses = courseRepository.findAll();
 
         if(!courses.isEmpty()) {
             return courses.stream()
@@ -39,7 +41,7 @@ public class CourseService {
     }
 
     public CourseResponseDTO getCourseById(int id) {
-        return repository.findById(id)
+        return courseRepository.findById(id)
                 .map(this::toResponseDto)
                 .orElseThrow(() -> new ResourceNotFoundException(String.format("No course with ID %d was found", id)));
     }
@@ -53,7 +55,7 @@ public class CourseService {
 
     public Optional<CourseResponseDTO> addCourse(CourseRequestDTO dto) {
         Course course = toEntity(dto);
-        return Optional.of(toResponseDto(repository.save(course)));
+        return Optional.of(toResponseDto(courseRepository.save(course)));
     }
 
     public CourseResponseDTO toResponseDto(Course course) {
