@@ -1,12 +1,14 @@
 package se.javapp.schoolsystem.service;
 
 import org.springframework.stereotype.Service;
+import se.javapp.schoolsystem.exception.ResourceNotFoundException;
 import se.javapp.schoolsystem.model.Course;
 import se.javapp.schoolsystem.model.dto.CourseRequestDTO;
 import se.javapp.schoolsystem.model.dto.CourseResponseDTO;
 import se.javapp.schoolsystem.repository.CourseRepository;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -15,6 +17,18 @@ public class CourseService {
 
     public CourseService(CourseRepository repository) {
         this.repository = repository;
+    }
+
+    public List<CourseResponseDTO> getAllCourses() {
+        List<Course> courses = repository.findAll();
+
+        if(!courses.isEmpty()) {
+            return courses.stream()
+                    .map(this::toResponseDto)
+                    .toList();
+        } else {
+            throw new ResourceNotFoundException("No courses were found");
+        }
     }
 
     public Optional<CourseResponseDTO> addCourse(CourseRequestDTO dto) {
