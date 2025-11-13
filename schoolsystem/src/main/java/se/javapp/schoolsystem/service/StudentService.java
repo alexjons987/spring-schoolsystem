@@ -93,15 +93,6 @@ public class StudentService {
         return new StudentDTO(student.getName(), student.getAge(), student.getEmail());
     }
 
-    private List<StudentDTO> toDTOList(List<Student> students) {
-        if (!students.isEmpty()) {
-            return students.stream()
-                    .map(this::toDTO)
-                    .toList();
-        } else {
-            throw new ResourceNotFoundException("There was no result to your query. PEBCAK probable.");
-        }
-    }
 
     private Student toEntity(StudentDTO studentDTO) {
         if (studentDTO == null) return null;
