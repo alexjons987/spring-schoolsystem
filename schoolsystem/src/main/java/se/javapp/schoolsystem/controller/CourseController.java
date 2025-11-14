@@ -27,9 +27,9 @@ public class CourseController {
 
     @PostMapping("/create")
     public ResponseEntity<CourseResponseDTO> addCourse(@Valid @RequestBody CourseRequestDTO dto) {
-       return  service.addCourse(dto)
-               .map(ResponseEntity::ok)
-               .orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
+        return service.addCourse(dto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 
     @GetMapping("/{courseId}")

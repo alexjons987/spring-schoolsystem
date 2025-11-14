@@ -6,12 +6,15 @@ import jakarta.validation.constraints.Positive;
 public class CourseRequestDTO {
     @NotBlank(message = "Title can not be empty")
     private String title;
+
     @NotBlank(message = "Teacher can not be empty")
     private String teacher;
+
     @Positive(message = "Max number must be positive")
     private Integer maxStudents;
 
-    public CourseRequestDTO() {}
+    public CourseRequestDTO() {
+    }
 
     public String getTitle() {
         return title;

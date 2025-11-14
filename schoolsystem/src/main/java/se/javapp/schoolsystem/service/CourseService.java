@@ -16,6 +16,7 @@ import java.util.Optional;
 
 @Service
 public class CourseService {
+
     private final CourseRepository courseRepository;
     private final EnrollmentRepository enrollmentRepository;
     private final StudentMapper studentMapper;
