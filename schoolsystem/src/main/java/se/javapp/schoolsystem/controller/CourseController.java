@@ -43,7 +43,7 @@ public class CourseController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<CourseResponseDTO>> searchStudents(
+    public ResponseEntity<List<CourseResponseDTO>> searchCourses(
             @RequestParam(required = false) String title,
             @RequestParam(required = false) String teacher,
             @RequestParam(required = false) Integer maxStudentsAllowed) {
