@@ -41,4 +41,16 @@ public class CourseController {
     public ResponseEntity<List<StudentDTO>> getStudentsByCourseId(@PathVariable int courseId) {
         return ResponseEntity.ok(service.getStudentsByCourseId(courseId));
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<CourseResponseDTO>> searchStudents(
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) String teacher,
+            @RequestParam(required = false) Integer maxStudentsAllowed) {
+        if (title == null && teacher == null && maxStudentsAllowed == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+        return ResponseEntity.ok(service.filterCourses(title, teacher, maxStudentsAllowed));
+    }
 }

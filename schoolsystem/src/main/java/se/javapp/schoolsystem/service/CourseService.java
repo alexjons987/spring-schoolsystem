@@ -31,7 +31,7 @@ public class CourseService {
     public List<CourseResponseDTO> getAllCourses() {
         List<Course> courses = courseRepository.findAll();
 
-        if(!courses.isEmpty()) {
+        if (!courses.isEmpty()) {
             return courses.stream()
                     .map(this::toResponseDto)
                     .toList();
@@ -56,6 +56,17 @@ public class CourseService {
     public Optional<CourseResponseDTO> addCourse(CourseRequestDTO dto) {
         Course course = toEntity(dto);
         return Optional.of(toResponseDto(courseRepository.save(course)));
+    }
+
+    public List<CourseResponseDTO> filterCourses(String title, String teacher, Integer maxStudentsAllowed) {
+        List<Course> allCourses = courseRepository.findAll();
+
+        return allCourses.stream()
+                .filter(c -> title == null || c.getTitle().toLowerCase().contains(title.toLowerCase().trim()))
+                .filter(c -> teacher == null || c.getTeacher().toLowerCase().contains(teacher.toLowerCase().trim()))
+                .filter(c -> maxStudentsAllowed == null || c.getMaxStudents() <= maxStudentsAllowed)
+                .map(this::toResponseDto)
+                .toList();
     }
 
     public CourseResponseDTO toResponseDto(Course course) {
