@@ -42,17 +42,13 @@ public class StudentService {
     public List<StudentDTO> filterStudents(String name, String letter, Integer minAge, Integer maxAge) {
         List<Student> allStudents = studentRepository.findAll();
 
-        if (!allStudents.isEmpty()) {
-            return allStudents.stream()
-                    .filter(s -> name == null || s.getName().contains(name))
-                    .filter(s -> letter == null || s.getName().startsWith(letter))
-                    .filter(s -> minAge == null || s.getAge() >= minAge)
-                    .filter(s -> maxAge == null || s.getAge() <= maxAge)
-                    .map(studentMapper::toDTO)
-                    .toList();
-        } else {
-            throw new ResourceNotFoundException("No students were found in the repository");
-        }
+        return allStudents.stream()
+                .filter(s -> name == null || s.getName().toLowerCase().contains(name.toLowerCase().trim()))
+                .filter(s -> letter == null || s.getName().startsWith(letter))
+                .filter(s -> minAge == null || s.getAge() >= minAge)
+                .filter(s -> maxAge == null || s.getAge() <= maxAge)
+                .map(studentMapper::toDTO)
+                .toList();
     }
 
     public StudentDTO createStudent(StudentDTO studentDTO) {
