@@ -1,6 +1,7 @@
 package se.javapp.schoolsystem.controller;
 
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -31,12 +32,15 @@ public class StudentController {
 
     @GetMapping("/search")
     public ResponseEntity<List<StudentDTO>> searchStudents(
-            @RequestParam(required = false) String namePart,
+            @RequestParam(required = false) String name,
             @RequestParam(required = false) String firstLetter,
             @RequestParam(required = false) Integer ageMin,
-            @RequestParam(required = false) Integer ageMax
-    ) {
-        return ResponseEntity.ok(studentService.filterStudents(namePart, firstLetter, ageMin, ageMax));
+            @RequestParam(required = false) Integer ageMax) {
+        if (name == null && firstLetter == null && ageMin == null && ageMax == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+        return ResponseEntity.ok(studentService.filterStudents(name, firstLetter, ageMin, ageMax));
     }
 
     @PostMapping("/create")

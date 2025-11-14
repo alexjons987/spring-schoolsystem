@@ -3,7 +3,6 @@ package se.javapp.schoolsystem.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import se.javapp.schoolsystem.model.dto.EnrollmentDTO;
-import se.javapp.schoolsystem.model.dto.StudentDTO;
 import se.javapp.schoolsystem.service.EnrollmentService;
 
 import java.util.List;

@@ -15,8 +15,6 @@ public class Course {
     private String title;
     private String teacher;
     private int maxStudents;
-    // TODO: add list of enrollments with @OneToMany?
-    // private List<Integer> studentIds;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     @JsonIgnore
@@ -28,7 +26,6 @@ public class Course {
         this.title = title;
         this.teacher = teacher;
         this.maxStudents = maxStudents;
-        //this.studentIds = studentIds;
     }
 
     public Course(int id, String title, String teacher, int maxStudents) {
@@ -36,7 +33,6 @@ public class Course {
         this.title = title;
         this.teacher = teacher;
         this.maxStudents = maxStudents;
-       // this.studentIds = studentIds;
     }
 
     public int getId() {
@@ -78,16 +74,4 @@ public class Course {
     public void setEnrollments(Set<Enrollment> enrollments) {
         this.enrollments = enrollments;
     }
-
-    // TODO: add getter/setter for enrollments
-    // public List<Integer> getStudentIds() {
-    //   return studentIds;
-    // }
-    //
-    // public void addStudent(Integer id) {
-    //   this.studentIds.add(id);
-    // }
-
-    // TODO: removeStudent
-    // public void removeStudent()
 }

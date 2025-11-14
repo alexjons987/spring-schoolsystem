@@ -9,8 +9,10 @@ public class StudentDTO {
     @NotBlank(message = "name cannot be empty")
     @Size(min = 2, message = "name must contain at least two or more characters")
     private final String name;
+
     @Positive(message = "age cannot be zero or negative")
     private final Integer age;
+
     @NotBlank(message = "email cannot be empty")
     @Email(message = "email has to be formatted properly")
     private final String email;

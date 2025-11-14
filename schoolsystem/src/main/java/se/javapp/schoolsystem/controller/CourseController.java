@@ -27,9 +27,9 @@ public class CourseController {
 
     @PostMapping("/create")
     public ResponseEntity<CourseResponseDTO> addCourse(@Valid @RequestBody CourseRequestDTO dto) {
-       return  service.addCourse(dto)
-               .map(ResponseEntity::ok)
-               .orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
+        return service.addCourse(dto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 
     @GetMapping("/{courseId}")
@@ -40,5 +40,17 @@ public class CourseController {
     @GetMapping("/{courseId}/students")
     public ResponseEntity<List<StudentDTO>> getStudentsByCourseId(@PathVariable int courseId) {
         return ResponseEntity.ok(service.getStudentsByCourseId(courseId));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<CourseResponseDTO>> searchCourses(
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) String teacher,
+            @RequestParam(required = false) Integer maxStudentsAllowed) {
+        if (title == null && teacher == null && maxStudentsAllowed == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+        return ResponseEntity.ok(service.filterCourses(title, teacher, maxStudentsAllowed));
     }
 }
